@@ -1,0 +1,4 @@
+name = "DelaunayTriangulations"
+uuid = "e7503242-6870-4064-a8fb-ffe2b6191cb8"
+authors = ["Paul Matlashewski <pmatlashewski@gmail.com>"]
+version = "0.1.0"
