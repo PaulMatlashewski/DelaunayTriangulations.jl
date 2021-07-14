@@ -1,5 +1,7 @@
 module DelaunayTriangulations
+export two_sum, grow_expansion, expansion_sum
 
-greet() = print("Hello World!")
+include("GeometryPredicates.jl")
+using .GeometryPredicates
 
 end # module
