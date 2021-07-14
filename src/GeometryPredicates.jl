@@ -95,4 +95,6 @@ end
     end
 end
 
+approximate(e) = sum(e)
+
 end # module
