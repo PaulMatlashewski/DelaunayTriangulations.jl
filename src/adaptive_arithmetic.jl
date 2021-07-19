@@ -34,7 +34,7 @@ end
 @inline function two_prod(a::T, b::T) where {T}
     x = a * b
     return two_prod_tail(a, b, x), x
-end    
+end
 
 @inline grow_expansion(a::T, b::T) where {T} = two_sum(a, b)
 @inline grow_expansion(a) = a
