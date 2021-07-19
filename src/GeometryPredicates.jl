@@ -204,4 +204,19 @@ function incircle(a::NTuple{2,T}, b::NTuple{2,T}, c::NTuple{2,T}, d::NTuple{2,T}
     end
 end
 
+# Test if a is in the outer half plane of bc
+function incircle(a::NTuple{2,T}, b::NTuple{2,T}, c::NTuple{2,T}) where {T}
+    # Check open half plane
+    in_open_half_plane = orient(a, b, c)
+    if in_open_half_plane == zero(T)
+        # Check if a lies along the segment bc
+        if (b[1] == c[1]) && (a[2] > min(b[2], c[2])) && (a[2] < max(b[2], c[2]))
+            in_open_half_plane = one(T)
+        elseif (a[1] > min(b[1], c[1])) && (a[1] < max(b[1], c[1]))
+            in_open_half_plane = one(T)
+        end
+    end
+    return in_open_half_plane
+end
+
 end # module

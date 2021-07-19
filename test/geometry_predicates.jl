@@ -98,5 +98,28 @@ using DelaunayTriangulations
             @test incircle((0.5, 0.0), (0.0, 0.5), (-0.5, 0.0), (0.0, prevfloat(-0.5))) < 0.0
             @test incircle((0.5, 0.0), (0.0, 0.5), (-0.5, 0.0), (0.0, nextfloat(-0.5))) > 0.0
         end
+        @testset "Ghost Incircle" begin
+            @testset "Upper Half Plane" begin
+                @test incircle((0.42, floatmin()), (0.0, 0.0), (0.5, 0.0)) > 0.0
+                @test incircle((0.42, -floatmin()), (0.0, 0.0), (0.5, 0.0)) < 0.0
+                @test incircle((floatmin(), 0.42), (0.0, 0.0), (0.0, 0.5)) < 0.0
+                @test incircle((-floatmin(), 0.42), (0.0, 0.0), (0.0, 0.5)) > 0.0
+            end
+            @testset "In Segment" begin
+                @test incircle((-floatmin(), 0.0), (0.0, 0.0), (0.5, 0.0)) == 0.0
+                @test incircle((0.0, 0.0), (0.0, 0.0), (0.5, 0.0)) == 0.0
+                @test incircle((floatmin(), 0.0), (0.0, 0.0), (0.5, 0.0)) == 1.0
+                @test incircle((prevfloat(0.5), 0.0), (0.0, 0.0), (0.5, 0.0)) == 1.0
+                @test incircle((0.5, 0.0), (0.0, 0.0), (0.5, 0.0)) == 0.0
+                @test incircle((nextfloat(0.5), 0.0), (0.0, 0.0), (0.5, 0.0)) == 0.0
+
+                @test incircle((0.0, -floatmin()), (0.0, 0.0), (0.0, 0.5)) == 0.0
+                @test incircle((0.0, 0.0), (0.0, 0.0), (0.0, 0.5)) == 0.0
+                @test incircle((0.0, floatmin()), (0.0, 0.0), (0.0, 0.5)) == 1.0
+                @test incircle((0.0, prevfloat(0.5)), (0.0, 0.0), (0.0, 0.5)) == 1.0
+                @test incircle((0.0, 0.5), (0.0, 0.0), (0.0, 0.5)) == 0.0
+                @test incircle((0.0, nextfloat(0.5)), (0.0, 0.0), (0.0, 0.5)) == 0.0
+            end
+        end
     end
 end
