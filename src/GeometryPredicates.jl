@@ -204,7 +204,7 @@ function incircle(a::NTuple{2,T}, b::NTuple{2,T}, c::NTuple{2,T}, d::NTuple{2,T}
     end
 end
 
-# Point D is a ghost vertex at infinity
+# Test if a is in the outer half plane of bc
 function incircle(a::NTuple{2,T}, b::NTuple{2,T}, c::NTuple{2,T}) where {T}
     # Check open half plane
     in_open_half_plane = orient(a, b, c)
