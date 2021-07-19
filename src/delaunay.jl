@@ -5,7 +5,6 @@ function insert_vertex!(triangulation::Triangulation{T}, vertex::NTuple{2,T}, tr
 end
 
 function insert_vertex!(triangulation::Triangulation, u::Int, triangle::NTuple{3,Int})
-    println("Deleting Triangle $(triangle)")
     delete_triangle!(triangulation, triangle)
     v, w, x = triangle
     dig_cavity!(triangulation, u, (v, w))
@@ -31,7 +30,6 @@ function dig_cavity!(triangulation::Triangulation{T}, u, edge) where {T}
     else
         u_incircle = incircle(triangulation, u, v, w, x)
     end
-    # u_incircle = x == -1 ? incircle(triangulation, u, w, v) : incircle(triangulation, u, v, w, x)
     if u_incircle > zero(T)
         # uvw and uvx are not Delaunay
         delete_triangle!(triangulation, (w, v, x))
