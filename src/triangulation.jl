@@ -18,6 +18,7 @@ function add_triangle!(triangulation::Triangulation, triangle::NTuple{3,Int})
     triangulation.edges[(u, v)] = w
     triangulation.edges[(v, w)] = u
     triangulation.edges[(w, u)] = v
+    return
 end
 
 function delete_triangle!(triangulation::Triangulation, triangle::NTuple{3,Int})
@@ -28,6 +29,7 @@ function delete_triangle!(triangulation::Triangulation, triangle::NTuple{3,Int})
         delete!(triangulation.edges, (v, w))
         delete!(triangulation.edges, (w, u))
     end
+    return
 end
 
 function adjacent(triangulation::Triangulation, edge::NTuple{2,Int})
