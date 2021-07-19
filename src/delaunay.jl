@@ -20,8 +20,6 @@ function dig_cavity!(triangulation::Triangulation{T}, u, edge) where {T}
         return
     end
     if x == -1
-    end
-    if x == -1
         u_incircle = incircle(triangulation, u, w, v)
     elseif v == -1
         u_incircle = incircle(triangulation, u, x, w)
