@@ -2,8 +2,8 @@ using DelaunayTriangulations
 
 @testset "Triangulation" begin
     vertices = [(0.0, 0.0), (0.5, 0.0), (1.0, 0.0),
-    (0.0, 0.5), (0.5, 0.5), (1.0, 0.5),
-    (0.0, 1.0), (0.5, 1.0), (1.0, 1.0)]
+                (0.0, 0.5), (0.5, 0.5), (1.0, 0.5),
+                (0.0, 1.0), (0.5, 1.0), (1.0, 1.0)]
     triangulation = Triangulation(vertices)
     @testset "Triangulation Construction" begin
         add_triangle!(triangulation, (1, 2, 5))
