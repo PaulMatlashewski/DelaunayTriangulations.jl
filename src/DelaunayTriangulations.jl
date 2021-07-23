@@ -7,8 +7,8 @@ export orient_fast, orient_exact, orient, incircle_fast, incircle_exact, incircl
 include("triangulation.jl")
 export Triangulation, add_triangle!, delete_triangle!, adjacent, adjacent_to_vertex, orient, incircle
 
-include("kdtree.jl")
-export sort_vertices, sort_vertices!
+include("biased_random_order.jl")
+export biased_random_order
 
 include("delaunay.jl")
 export insert_vertex!, dig_cavity!
