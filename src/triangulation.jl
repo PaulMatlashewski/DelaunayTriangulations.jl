@@ -9,6 +9,10 @@ function Triangulation(vertices::Vector{Tuple{T,T}}) where {T}
     return Triangulation(vertices, Dict{NTuple{2,Int},Int}())
 end
 
+function Triangulation(T::Datatype, n::Int)
+    return Triangulation(Vector{NTuple{2,T}(undef, n), Dict{NTuple{2,Int},Int}()})
+end
+
 function add_triangle!(triangulation::Triangulation, triangle::NTuple{3,Int})
     u, v, w = triangle
     edges = keys(triangulation.edges)
