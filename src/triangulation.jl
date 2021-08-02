@@ -66,9 +66,9 @@ function GeometryPredicates.orient(triangulation::Triangulation, u::Int, v::Int,
                   triangulation.vertices[w])
 end
 
-function GeometryPredicates.incircle(triangulation::Triangulation, u::Int, v::Int, w::Int, x::Int)
+function GeometryPredicates.incircle(triangulation::Triangulation, u::Int, v::Int, w::Int, q::Int)
     return incircle(triangulation.vertices[u], triangulation.vertices[v],
-                    triangulation.vertices[w], triangulation.vertices[x])
+                    triangulation.vertices[w], triangulation.vertices[q])
 end
 
 function GeometryPredicates.incircle(triangulation::Triangulation, u::Int, v::Int, w::Int)

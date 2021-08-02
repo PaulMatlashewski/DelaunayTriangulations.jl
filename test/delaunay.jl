@@ -80,5 +80,19 @@ using DelaunayTriangulations
             @test adjacent(triangulation, (11, -1)) == 9
             @test adjacent(triangulation, (-1, 9)) == 11
         end
+        @testset "Triangulation" begin
+            vertices = [(rand(), rand()) for _ in 1:100]
+            triangulation = delaunay_triangulation(vertices)
+            for (u, v) in keys(triangulation.edges)
+                w = adjacent(triangulation, (u, v))
+                if u != -1 && v != -1 && w != -1
+                    for q in 1:length(triangulation.vertices)
+                        if q != u && q != v && q != w
+                            @test incircle(triangulation, u, v, w, q) < 0.0
+                        end
+                    end
+                end
+            end
+        end
     end
 end
