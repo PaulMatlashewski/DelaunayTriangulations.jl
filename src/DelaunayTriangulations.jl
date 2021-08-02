@@ -11,6 +11,6 @@ include("biased_random_order.jl")
 export biased_random_order
 
 include("delaunay.jl")
-export insert_vertex!, dig_cavity!
+export delaunay_triangulation, insert_vertex!, dig_cavity!
 
 end # module
