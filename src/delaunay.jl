@@ -7,16 +7,12 @@ function delaunay_triangulation(vertices::Vector{NTuple{2,T}}) where {T}
         # Add vertices skipped for initial triangulation
         for q in 3:w
             triangle = locate_vertex(triangulation, triangle, q)
-            insert_vertex!(triangulation, q, triangle)
-            u, v = adjacent_to_vertex(triangulation, q)
-            triangle = q, u ,v
+            triangle = insert_vertex!(triangulation, q, triangle)
         end
     end
     for q in w:n
         triangle = locate_vertex(triangulation, triangle, q)
-        insert_vertex!(triangulation, q, triangle)
-        u, v = adjacent_to_vertex(triangulation, q)
-        triangle = q, u ,v
+        triangle = insert_vertex!(triangulation, q, triangle)
     end
     return triangulation
 end
@@ -95,7 +91,7 @@ end
 
 function insert_vertex!(triangulation::Triangulation{T}, vertex::NTuple{2,T}, triangle::NTuple{3,Int}) where {T}
     push!(triangulation.vertices, vertex)
-    insert_vertex!(triangulation, length(triangulation.vertices), triangle)
+    return insert_vertex!(triangulation, length(triangulation.vertices), triangle)
 end
 
 function insert_vertex!(triangulation::Triangulation, u::Int, triangle::NTuple{3,Int})
@@ -103,15 +99,16 @@ function insert_vertex!(triangulation::Triangulation, u::Int, triangle::NTuple{3
     v, w, x = triangle
     dig_cavity!(triangulation, u, (v, w))
     dig_cavity!(triangulation, u, (w, x))
-    dig_cavity!(triangulation, u, (x, v))
+    return dig_cavity!(triangulation, u, (x, v))
 end
 
 function dig_cavity!(triangulation::Triangulation{T}, u, edge) where {T}
     v, w = edge
     x = adjacent(triangulation, (w, v))
     if x == 0 # Triangle has already been deleted
-        return
+        return (0, 0, 0)
     end
+    # Check for insertion in ghost triangle
     if x == -1
         u_incircle = incircle(triangulation, u, w, v)
     elseif v == -1
@@ -125,8 +122,7 @@ function dig_cavity!(triangulation::Triangulation{T}, u, edge) where {T}
         # uvw and uvx are not Delaunay
         delete_triangle!(triangulation, (w, v, x))
         dig_cavity!(triangulation, u, (v, x))
-        dig_cavity!(triangulation, u, (x, w))
-        return
+        return dig_cavity!(triangulation, u, (x, w))
     end
-    add_triangle!(triangulation, (u, v, w))
+    return add_triangle!(triangulation, (u, v, w))
 end
