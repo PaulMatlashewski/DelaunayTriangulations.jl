@@ -38,7 +38,6 @@ using DelaunayTriangulations
         @test adjacent_to_vertex(triangulation, 2) in Set([(5, 1), (6, 5)])
         @test adjacent_to_vertex(triangulation, 3) == (6, 2)
         @test adjacent_to_vertex(triangulation, 9) == (8, 6)
-        @test adjacent_to_vertex(triangulation, 10) == (0, 0) # No triangle containing vertex
     end
     @testset "Geometry Predicates" begin
         push!(triangulation.vertices, (0.25, 0.0001))
@@ -63,10 +62,11 @@ using DelaunayTriangulations
         delete_triangle!(triangulation, (2, 5, 1))
         @test length(triangulation.edges) == 21
         @test adjacent(triangulation, (5, 1)) == 0
-        @test adjacent_to_vertex(triangulation, 2) == (6, 5)
-        delete_triangle!(triangulation, (5, 4, 1))
-        delete_triangle!(triangulation, (3, 6, 2))
         delete_triangle!(triangulation, (5, 2, 6))
+        @test adjacent_to_vertex(triangulation, 2) == (3, 6)
+        delete_triangle!(triangulation, (3, 6, 2))
+        @test adjacent_to_vertex(triangulation, 2) == (0, 0)
+        delete_triangle!(triangulation, (5, 4, 1))
         delete_triangle!(triangulation, (9, 8, 6))
         delete_triangle!(triangulation, (8, 5, 6))
         delete_triangle!(triangulation, (4, 5, 7))
